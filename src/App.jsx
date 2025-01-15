@@ -1,66 +1,55 @@
-import { useState } from "react"
-import "./App.css"
-import { use } from "react"
+import { useState } from "react";
+import Newform from "./Newform";
+import "./App.css";
 
+export default function App() {
+  const [todo, setTodo] = useState([]);
 
-export default function App(){
-  const [newitem, setNewItem ] = useState("")
-  const[todo, setTodo] =  useState([])
-
-  
-
-  function handleSubmit(e){
-    e.preventDefault()
-    setTodo( currentTodos  => {
-      return[
-        ...currentTodos, {id: crypto.randomUUID(), title: newitem, completed: false}
-      ]
-      
-    } )
-
-    setNewItem("")
+  function addTodo(title) {
+    setTodo((currentTodos) => [
+      ...currentTodos,
+      { id: crypto.randomUUID(), title, completed: false },
+    ]);
   }
 
-  function toggleTodo(id, completed){
-
-    setTodo(currentTodos => {
-      return currentTodos.map(todo => {
-        if( todo.id === id){
-          return{...todo, completed}
-        }
-        return todo
-      })
-    })
+  function toggleTodo(id, completed) {
+    setTodo((currentTodos) =>
+      currentTodos.map((todo) =>
+        todo.id === id ? { ...todo, completed } : todo
+      )
+    );
   }
 
-  return(
+  function handleDelete(id) {
+    setTodo((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
+  }
+
+  return (
     <>
-    <form action="" className="new-item-from">
-      <div className="name-row">
-       <label htmlFor="item-Name"></label>
-       <input value={newitem} onChange={ e => setNewItem(e.target.value)} type="text" />
-      </div>
-      <button className="btn-add-item" onClick={handleSubmit}>Add</button>
-    </form>
-    <div className="todo-list-div">
-      <h1>To-do List</h1>
-      <ul className="List">
-        {todo.map( todo => {
-          return(
+      <Newform onSubmit={addTodo} />
+      <div className="todo-list-div">
+        <h1>To-Do List</h1>
+        <ul className="List">
+          {todo.map((todo) => (
             <li key={todo.id}>
-                <label >
-                <input type="checkbox" checked = {todo.completed} onChange={e => toggleTodo(todo.id, e.target.checked)} />
-                  {todo.title}
-                </label>
-                <button className="btn-delete-item">Delete</button>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={(e) => toggleTodo(todo.id, e.target.checked)}
+                />
+                {todo.title}
+              </label>
+              <button
+                className="btn-delete-item"
+                onClick={() => handleDelete(todo.id)}
+              >
+                Delete
+              </button>
             </li>
-
-
-          )
-        })}
-
-      </ul>
-    </div>
-  </>
-  )
+          ))}
+        </ul>
+      </div>
+    </>
+  );
 }
