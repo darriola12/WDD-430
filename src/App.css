@@ -1,0 +1,25 @@
+#root {
+
+    text-align: center;
+    background-color: bisque;
+}
+#item_list{
+
+    list-style-type: none;
+    margin-bottom: 10px;
+    
+}
+.btn-delete-item{
+
+    margin-left: 10px;
+    font-size: 15px;
+
+}
+.btn-add-item{
+
+    margin-top: 10px;
+    font-size: 15px;
+    
+
+}
+

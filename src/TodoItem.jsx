@@ -1,7 +1,7 @@
 export default function TodoItem( {id, completed, title, toggleTodo, handleDelete }){
 
     return(
-        <li>
+        <li id="item_list">
               <label>
                 <input
                   type="checkbox"
@@ -10,7 +10,7 @@ export default function TodoItem( {id, completed, title, toggleTodo, handleDelet
                 />
                 {title}
               </label>
-              <button
+              <button 
                 className="btn-delete-item"
                 onClick={() => handleDelete(id)}
               >
